@@ -6,6 +6,7 @@ export const createApplication = async (req, res) => {
 
     res.status(201).json({
       success: true,
+      message: "Operation successful",
       data: application,
     });
   } catch (error) {
@@ -18,10 +19,26 @@ export const createApplication = async (req, res) => {
 
 export const getApplications = async (req, res) => {
   try {
-    const applications = await Application.find();
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    let query = {};
+
+    if (req.query.search) {
+      query.applicationId = {
+        $regex: req.query.search,
+        $options: "i",
+      };
+    }
+
+    const applications = await Application.find(query)
+      .skip(skip)
+      .limit(limit);
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: applications,
     });
   } catch (error) {
@@ -47,6 +64,7 @@ export const getApplicationById = async (req, res) => {
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: application,
     });
   } catch (error) {
@@ -67,6 +85,7 @@ export const updateApplication = async (req, res) => {
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: application,
     });
   } catch (error) {
@@ -85,7 +104,8 @@ export const deleteApplication = async (req, res) => {
 
     res.json({
       success: true,
-      message: "Application deleted",
+      message: "Operation successful",
+      data: [],
     });
   } catch (error) {
     res.status(500).json({

@@ -2,10 +2,27 @@ import Student from "../models/Student.js";
 
 export const getStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const filter = {};
+
+    if (req.query.department) {
+      filter.department = req.query.department;
+    }
+
+    if (req.query.status) {
+      filter.status = req.query.status;
+    }
+
+    if (req.query.cgpaMin) {
+      filter.cgpa = {
+        $gte: Number(req.query.cgpaMin),
+      };
+    }
+
+    const students = await Student.find(filter);
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: students,
     });
   } catch (error) {
@@ -31,6 +48,7 @@ export const getStudentById = async (req, res) => {
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: student,
     });
   } catch (error) {

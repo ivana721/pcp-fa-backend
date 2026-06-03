@@ -6,6 +6,7 @@ export const createDrive = async (req, res) => {
 
     res.status(201).json({
       success: true,
+      message: "Operation successful",
       data: drive,
     });
   } catch (error) {
@@ -24,10 +25,18 @@ export const getDrives = async (req, res) => {
       filter.status = req.query.status;
     }
 
+    if (req.query.company) {
+      filter.title = {
+        $regex: req.query.company,
+        $options: "i",
+      };
+    }
+
     const drives = await Drive.find(filter);
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: drives,
     });
   } catch (error) {
@@ -53,6 +62,7 @@ export const getDriveById = async (req, res) => {
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: drive,
     });
   } catch (error) {
@@ -73,6 +83,7 @@ export const updateDrive = async (req, res) => {
 
     res.json({
       success: true,
+      message: "Operation successful",
       data: drive,
     });
   } catch (error) {
@@ -91,7 +102,8 @@ export const deleteDrive = async (req, res) => {
 
     res.json({
       success: true,
-      message: "Drive deleted",
+      message: "Operation successful",
+      data: [],
     });
   } catch (error) {
     res.status(500).json({
