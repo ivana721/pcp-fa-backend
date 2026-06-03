@@ -38,6 +38,7 @@ const loadData = async () => {
         : [];
 
       dataSet = response2.data;
+      console.log(Object.keys(dataSet));
 
       console.log("Fetched dataset:");
       console.log("Raw response payload:");
