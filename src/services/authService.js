@@ -1,6 +1,7 @@
+import axios from "axios";
+
 console.log("URL:", `${process.env.BASE_URL}/auth/login`);
 console.log("ID:", process.env.STUDENT_ID);
-const axios = require("axios");
 
 async function login() {
   try {
@@ -19,4 +20,4 @@ async function login() {
   }
 }
 
-module.exports = login;
+export default login;

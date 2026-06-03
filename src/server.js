@@ -1,8 +1,11 @@
+import dns from "node:dns";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import axios from "axios";
 import app from "./app.js";
 import AssessmentDataset from "./modules/assessment/models/assessmentData.model.js";
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 dotenv.config();
 
